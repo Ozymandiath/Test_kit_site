@@ -1,0 +1,1 @@
+from localsite.settings import settings
