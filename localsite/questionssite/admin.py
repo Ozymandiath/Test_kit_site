@@ -1,6 +1,8 @@
 from django.contrib import admin
 from django.contrib.auth import get_user_model
+from django.core.exceptions import ValidationError
 
+from .forms import AnswersForm
 from .models import Questions, Answers, CategoriesQuestion
 
 User = get_user_model()
@@ -16,6 +18,7 @@ class UserAdmin(admin.ModelAdmin):
 class AnswersAdmin(admin.TabularInline):
     model = Answers
     extra = 0
+    form = AnswersForm
 
 
 @admin.register(Questions)
@@ -23,7 +26,6 @@ class AdminQuestion(admin.ModelAdmin):
     inlines = [
         AnswersAdmin,
     ]
-
 
 class QuestionsAdmin(admin.StackedInline):
     model = Questions
