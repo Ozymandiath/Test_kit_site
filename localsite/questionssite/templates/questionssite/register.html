@@ -1,0 +1,62 @@
+{% extends "questionssite/base.html" %}
+{% block content %}
+    {% if user.is_authenticated %}
+        <div class="vh-100 d-flex justify-content-center align-items-center">
+            <div class="container">
+                <div class="alert alert-danger" role="alert">
+                    <h1>Вы уже авторизованы, вернитесь на главную. Или выйдите из учетной записи.</h1>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <div class="vh-100 d-flex justify-content-center align-items-center">
+            <div class="container">
+                <div class="row d-flex justify-content-center">
+                    <div class="col-12 col-md-8 col-lg-6">
+                        <div class="border border-3 border-danger"></div>
+                        <div class="card bg-white shadow-lg">
+                            <div class="card-body p-5">
+                                {% if form.errors %}
+                                    <div class="alert alert-danger" role="alert">
+                                        Ошибка регистрации!
+                                    </div>
+                                {% endif %}
+                                <form class="mb-3 mt-md-6" method="post" action="{% url 'register' %}">
+                                    {% csrf_token %}
+                                    <h2 class="fw-bold mb-4 text-uppercase text-center ">Регистрация</h2>
+                                    <div class="mb-3">
+                                        <label class="form-label ">{{ form.username.label_tag }}</label>
+                                        {{ form.username }}
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label ">{{ form.password1.label_tag }}</label>
+                                        {{ form.password1 }}
+                                        {% for key, value in form.errors.items %}
+                                            <span class="text-danger">
+                                {{ value }}
+                                </span>
+                                        {% endfor %}
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label ">{{ form.password2.label_tag }}</label>
+                                        {{ form.password2 }}
+                                        {{ form.password2.help_text }}
+                                    </div>
+                                    <div class="d-grid">
+                                        <button class="btn btn-outline-dark" type="submit">Регистрация</button>
+                                    </div>
+                                </form>
+                                <div>
+                                    <p class="mb-0  text-center">Уже зарегистрированы?
+                                        <a href="{% url 'login' %}" class="link-primary">Вход</a>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+{% endblock %}

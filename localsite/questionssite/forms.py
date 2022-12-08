@@ -1,4 +1,5 @@
 from django.contrib.auth import get_user_model
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, UsernameField
 from django.core.exceptions import ValidationError
 from django import forms
 
@@ -25,3 +26,56 @@ class AnswersForm(forms.ModelForm):
     class Meta:
         model = Answers
         fields = ["title", "correct"]
+
+
+class RegisterCustomForm(UserCreationForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['password1'].widget = forms.PasswordInput(attrs={
+            "autocomplete": "new-password",
+            "class": "form-control",
+            "placeholder": "*******"
+        })
+        self.fields['password2'].widget = forms.PasswordInput(
+            attrs={
+                "autocomplete": "new-password",
+                "class": "form-control",
+                "placeholder": "*******"
+            })
+
+    class Meta(UserCreationForm.Meta):
+        model = User
+        fields = [
+            'username',
+            'password1',
+            'password2'
+        ]
+        widgets = {
+            "username": forms.TextInput(
+                attrs={
+                    "class": "form-control",
+                    "placeholder": "Username"
+                }
+            )}
+
+
+
+class LoginCustomForm(AuthenticationForm):
+    username = UsernameField(
+        widget=forms.TextInput(
+            attrs={
+                "autofocus": True,
+                "class": "form-control",
+                "placeholder": "Username"
+            }
+        ))
+    password = forms.CharField(
+        label="Пароль",
+        strip=False,
+        widget=forms.PasswordInput(
+            attrs={
+                "autocomplete": "current-password",
+                "class": "form-control",
+                "placeholder": "*******"
+            })
+    )

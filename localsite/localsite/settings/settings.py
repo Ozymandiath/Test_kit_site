@@ -124,6 +124,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'questionssite.CustomUser'
 
+LOGOUT_REDIRECT_URL = "login"
 
 try:
     from localsite.settings.settings_local import *

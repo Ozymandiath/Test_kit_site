@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <title>Сайт тестирования</title>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body class="p-3 m-0 border-0 bd-example" style="background-color: rgba(238,238,238,0.25);">
+
+<nav class="navbar navbar-expand-lg md-3 mb-4" style="background-color: rgba(213,28,28,0.75);">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{% url 'home' %}">Тестировщик</a>
+        <div class="collapse navbar-collapse position-relative" id="navbarNav">
+            <ul class="navbar-nav ms-auto ">
+                {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link " href="{% url 'logout' %}">Выход</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link " href="{% url 'login' %}">Логин</a>
+                    </li>
+                    <li class="nav-item ">
+                        <a class="nav-link" href="{% url 'register' %}">Регистрация</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>
+<div class="container-xxl">
+    {% block content %}
+    {% endblock %}
+</div>
+</body>
+</html>
