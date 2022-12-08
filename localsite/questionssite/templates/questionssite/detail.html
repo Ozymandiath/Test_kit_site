@@ -1,0 +1,23 @@
+{% extends "questionssite/base.html" %}
+{% block content %}
+    {% if form.errors %}
+        <div class="alert alert-danger" role="alert">
+            Выберите ответ!
+        </div>
+    {% endif %}
+    <form class="mb-3 mt-md-6" method="post" action="{% url 'pass' cat_id details.pk %}">
+        {% csrf_token %}
+        <h2 class="fw-bold mb-4 text-uppercase text-center ">{{ details.title }}</h2>
+        {% for answer in details.answers_set.all %}
+            <div class="mb-3">
+                <input type="checkbox" name="answer-{{ answer.pk }}" class="form-check-input" id="{{ answer.pk }}"
+                       value="{{ answer.pk }}"/>
+                <label class="form-label ">{{ answer.title }}</label>
+            </div>
+        {% endfor %}
+        <div class="d-grid">
+            <button class="btn btn-outline-dark" type="submit">Следующий вопрос</button>
+        </div>
+    </form>
+
+{% endblock %}

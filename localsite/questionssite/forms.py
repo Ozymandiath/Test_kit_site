@@ -3,7 +3,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, User
 from django.core.exceptions import ValidationError
 from django import forms
 
-from .models import Answers
+from .models import Answers, Questions
 
 User = get_user_model()
 
@@ -59,7 +59,6 @@ class RegisterCustomForm(UserCreationForm):
             )}
 
 
-
 class LoginCustomForm(AuthenticationForm):
     username = UsernameField(
         widget=forms.TextInput(
@@ -79,3 +78,11 @@ class LoginCustomForm(AuthenticationForm):
                 "placeholder": "*******"
             })
     )
+
+
+class QuestionForm(forms.ModelForm):
+    correct = forms.BooleanField(required=False)
+
+    class Meta:
+        model = Answers
+        fields = ["correct"]

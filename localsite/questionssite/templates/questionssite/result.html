@@ -1,0 +1,12 @@
+{% extends "questionssite/base.html" %}
+{% block content %}
+    <div>
+        <h3>Количество верных ответов: {{ right_answer }}</h3>
+    </div>
+    <div>
+        <h3>Количество неверных ответов: {{ not_right_answer }}</h3>
+    </div>
+    <div>
+        <h3>Процент верных ответов: {{ percent_right }} %</h3>
+    </div>
+{% endblock %}
