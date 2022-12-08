@@ -1,4 +1,5 @@
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView
 from django.db.models import Q
 from django.shortcuts import render, redirect
@@ -15,7 +16,8 @@ class TableListTest(ListView):
     context_object_name = "cat_test"
 
 
-class DetailsTest(View):
+class DetailsTest(LoginRequiredMixin, View):
+    login_url = '/login/'
     template_name = "questionssite/detail.html"
     form_class = QuestionForm
 
@@ -82,11 +84,12 @@ class DetailsTest(View):
                 return redirect("result", pk1)
 
 
-class ResultTest(View):
+class ResultTest(LoginRequiredMixin, View):
+    login_url = '/login/'
     template_name = "questionssite/result.html"
 
     def get(self, request, pk):
-        user_info = UserQuestionsCheck.objects.filter(title_test=pk)
+        user_info = UserQuestionsCheck.objects.filter(Q(user=request.user) & Q(title_test=pk))
 
         if user_info.count():
             context = {
